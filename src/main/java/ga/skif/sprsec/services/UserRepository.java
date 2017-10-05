@@ -1,0 +1,10 @@
+package ga.skif.sprsec.services;
+
+import ga.skif.sprsec.entities.User;
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRepository extends CrudRepository<User, Integer> {
+
+    User findByEmail(String email);
+
+}
