@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
 
-//@Controller
+@Controller
 @SessionAttributes(value = "userJSP")
 public class IndexController {
 
