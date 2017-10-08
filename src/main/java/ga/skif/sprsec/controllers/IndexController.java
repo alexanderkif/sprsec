@@ -44,13 +44,11 @@ public class IndexController {
         User checkUser = getCheckUser();
         if (checkUser!=null && Objects.equals(checkUser.getEmail(), email) && Objects.equals(checkUser.getPassword(), pass)) {
             userJsp = checkUser;
-            sign = "<a href=\"/out\">Sign out (" + userJsp.getName() + ")</a>";
+            sign = "";
         }
         lform = "";
         titl = "Index";
-        li =    "<li class=\"active\"><a href=\"/\">Home</a></li>\n" +
-                "<li>" + sign + "</li>\n" +
-                "<li><a href=\"/register\">Register</a></li>\n";
+        li =    "index";
         return getModelAndView(userJsp);
     }
 
@@ -107,9 +105,7 @@ public class IndexController {
             }
         }
         titl = "Login";
-        li =    "<li><a href=\"/\">Home</a></li>\n" +
-                "<li class=\"active\">" + sign + "</li>\n" +
-                "<li><a href=\"/register\">Register</a></li>\n";
+        li =    "login";
         return getModelAndView(userJsp);
     }
 
@@ -118,9 +114,7 @@ public class IndexController {
         sign = in;
         lform = "";
         titl = "Logout";
-        li =    "<li class=\"active\"><a href=\"/\">Home</a></li>\n" +
-                "<li>" + sign + "</li>\n" +
-                "<li><a href=\"/register\">Register</a></li>\n";
+        li =    "index";
         return getModelAndView(new User());
     }
 
@@ -220,9 +214,8 @@ public class IndexController {
             }
         }
         titl = "Add new user";
-        li =    "<li><a href=\"/\">Home</a></li>\n" +
-                "<li>" + sign + "</li>\n" +
-                "<li class=\"active\"><a href=\"/register\">Register</a></li>\n";
+        li =    "register";
+//        userJsp.setName("Alex");
         return getModelAndView(userJsp);
     }
 

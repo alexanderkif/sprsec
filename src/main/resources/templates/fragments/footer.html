@@ -10,16 +10,28 @@
 
         <footer>
             <!-- this is footer -->
-            © 2017 mkyong.com
-            <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <a th:href="@{/logout}">Sign Out</a>
-            </span>
-
-            <script type="text/javascript"
-                    src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+            <div class="container bo">
+                <br/>
+                <div class="row centered">
+                    <div class="col-lg-4 col-sm-4">
+                        <i class="fa fa-heart"></i>
+                        <h4>Design</h4>
+                        <p>The whole design was made around the standard Windows picture.</p>
+                    </div>
+                    <div class="col-lg-4 col-sm-4">
+                        <i class="fa fa-laptop"></i>
+                        <h4>Computers</h4>
+                        <p>All the work I did on my laptop. And also thanks Heroku for hosting.</p>
+                    </div>
+                    <div class="col-lg-4 col-sm-4">
+                        <i class="fa fa-trophy"></i>
+                        <h4>Help</h4>
+                        <p>Special thanks to the Internet for the provided training materials.</p>
+                    </div>
+                </div>
+            </div>
+            <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+            <!--<script src="res/js/bootstrap.min.js"></script>-->
         </footer>
     </div>
 
