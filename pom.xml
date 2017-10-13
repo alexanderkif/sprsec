@@ -24,7 +24,7 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<dependencies>
+    <dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -49,6 +49,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -58,7 +62,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+            <version>1.16.8</version>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,10 +75,10 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.zaxxer</groupId>-->
+			<!--<artifactId>HikariCP</artifactId>-->
+		<!--</dependency>-->
 
 		<!-- optional, it brings userful tags to display spring security stuff -->
 		<dependency>
@@ -88,11 +93,22 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Optional, for bootstrap -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>10.0.1</version>
+		</dependency>
+
+		 <!--Optional, for bootstrap-->
 		<!--<dependency>-->
 			<!--<groupId>org.webjars</groupId>-->
 			<!--<artifactId>bootstrap</artifactId>-->
 			<!--<version>3.3.7</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.webjars</groupId>-->
+			<!--<artifactId>jquery</artifactId>-->
+			<!--<version>3.2.1</version>-->
 		<!--</dependency>-->
 
 	</dependencies>
