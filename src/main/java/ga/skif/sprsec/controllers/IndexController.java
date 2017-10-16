@@ -41,15 +41,6 @@ public class IndexController {
         return "login";
     }
 
-    @RequestMapping("/logout")
-    public String logout(Model model) {
-        li = "index";
-        titl = "Logout";
-        model.addAttribute("links", li);
-        model.addAttribute("titl", titl);
-        return "index";
-    }
-
     @RequestMapping("/about")
     public String out(Model model) {
         li = "about";
@@ -69,7 +60,7 @@ public class IndexController {
     }
 
     @RequestMapping("/adduser")
-    public String adduser(Model model, @ModelAttribute("email") String email, @ModelAttribute("password") String password) {
+    public String adduser(Model model, @ModelAttribute("username") String email, @ModelAttribute("password") String password) {
         if (accountRepository.findByEmail(email)==null) {
             accountRepository.save(Account.builder()
                     .email(email)
@@ -84,7 +75,6 @@ public class IndexController {
             li = "index";
             titl = "Not added";
         }
-
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
         return "index";

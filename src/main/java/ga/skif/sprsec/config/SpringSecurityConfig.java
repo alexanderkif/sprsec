@@ -13,26 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    AccountRepository accountRepository;
-
     @Autowired
     private MyUserDetailsService myUserDetailsService;
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth)
-//            throws Exception {
-//        auth.authenticationProvider(authenticationProvider());
-//    }
-
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider
-//                = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(myUserDetailsService);
-//        authProvider.setPasswordEncoder(encoder());
-//        return authProvider;
-//    }
 
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,7 +39,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .permitAll()
                 .and()
-                .logout()//.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logout()
                 .permitAll();
     }
 }
