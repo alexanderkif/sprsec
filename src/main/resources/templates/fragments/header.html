@@ -27,13 +27,18 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <!--<div th:include="${links}" />-->
                     <li th:class="${links}=='index'?'active':''" ><a href="/">Home</a></li>
-                    <li th:class="${links}=='login'?'active':''"><a th:href="${#authentication.getName()}!='anonymousUser'?'/logout':'/about'"
-                                th:text="${#authentication.getName()}!='anonymousUser'?'Sign out ('+${#authentication.getName()}+')':'Sign in'">Sign</a></li>
-                    <li th:class="${links}=='register'?'active':''"><a href="/register">Register</a></li>
-                    <li th:class="${links}=='about'?'active':''"><a href="/about">Secret page</a></li>
-                    <li><a href="mailto:alexander_kif@mail.ru?subject=From%20SahaSpring%20site" target="_blank"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+                    <li th:class="${links}=='secret'?'active':''"><a href="/secret">Secret page</a></li>
+                    <li th:if="${#authentication.getName()}!='anonymousUser'" th:class="${links}=='secret2'?'active':''">
+                        <a href="/secret2">Secret page 2</a></li>
+                    <li th:class="${links}=='login'?'active':''">
+                        <a th:href="${#authentication.getName()}!='anonymousUser'?'/logout':'/secret'"
+                                th:text="${#authentication.getName()}!='anonymousUser'?'Sign out ('
+                                +${#authentication.getName()}+')':'Sign in'">Sign</a></li>
+                    <li th:if="${#authentication.getName()}=='anonymousUser'" th:class="${links}=='register'?'active':''">
+                        <a href="/register">Register</a></li>
+                    <li><a href="mailto:alexander_kif@mail.ru?subject=From%20SahaSpring%20site" target="_blank">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
         </div>

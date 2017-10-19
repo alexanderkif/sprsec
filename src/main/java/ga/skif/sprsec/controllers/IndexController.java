@@ -1,7 +1,9 @@
 package ga.skif.sprsec.controllers;
 
 import ga.skif.sprsec.entities.Account;
+import ga.skif.sprsec.entities.Docs;
 import ga.skif.sprsec.services.AccountRepository;
+import ga.skif.sprsec.services.DocsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -9,11 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+import java.util.Date;
+import java.util.List;
+
 @Controller
 public class IndexController {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private DocsRepository docsRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -21,7 +29,8 @@ public class IndexController {
     private String titl;
     private String li;
 
-    public IndexController() {}
+    public IndexController() {
+    }
 
     @RequestMapping(value = "/")
     public String home(Model model) {
@@ -41,13 +50,48 @@ public class IndexController {
         return "login";
     }
 
-    @RequestMapping("/about")
-    public String out(Model model) {
-        li = "about";
-        titl = "About";
+    @RequestMapping("/secret")
+    public String secret(Model model) {
+        li = "secret";
+        titl = "Secret";
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "about";
+        return "secret";
+    }
+
+    @RequestMapping("/adddoc")
+    public String adddoc(Model model, @ModelAttribute("titleDoc") String titleDoc,
+                         @ModelAttribute("textDoc") String textDoc, Principal principal) {
+        try {
+            Account account = accountRepository.findByEmail(principal.getName());
+            List<Docs> docs = docsRepository.findByDocowner(account);
+            Docs doc = docs.stream()
+                    .filter(d -> d.getTitledoc().equals(titleDoc))
+                    .findFirst()
+                    .orElse(new Docs());
+            doc.setTitledoc(titleDoc);
+            doc.setTextdoc(textDoc);
+            doc.setDatedoc(new Date());
+            doc.setDocowner(account);
+            docsRepository.save(doc);
+            li = "secret";
+            titl = "Saved";
+        } catch (Exception e){
+            li = "secret";
+            titl = "Not saved";
+        }
+        model.addAttribute("links", li);
+        model.addAttribute("titl", titl);
+        return "secret";
+    }
+
+    @RequestMapping("/secret2")
+    public String secret2(Model model) {
+        li = "secret2";
+        titl = "Secret2";
+        model.addAttribute("links", li);
+        model.addAttribute("titl", titl);
+        return "secret2";
     }
 
     @RequestMapping("/register")
@@ -61,7 +105,7 @@ public class IndexController {
 
     @RequestMapping("/adduser")
     public String adduser(Model model, @ModelAttribute("username") String email, @ModelAttribute("password") String password) {
-        if (accountRepository.findByEmail(email)==null) {
+        if (accountRepository.findByEmail(email) == null) {
             accountRepository.save(Account.builder()
                     .email(email)
                     .password(encoder.encode(password))
@@ -70,8 +114,7 @@ public class IndexController {
             );
             li = "index";
             titl = "Added";
-        }
-        else {
+        } else {
             li = "index";
             titl = "Not added";
         }
@@ -80,4 +123,7 @@ public class IndexController {
         return "index";
     }
 
+    private Account principalToAccount(Principal principal) {
+        return accountRepository.findByEmail(principal.getName());
+    }
 }
