@@ -23,14 +23,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand"  th:href="@{/}">Alexander Ki<i style="font-size: 24px" class="fa fa-facebook"></i></a>
+                <a class="navbar-brand"  th:href="@{/index}">Alexander Ki<i style="font-size: 24px" class="fa fa-facebook"></i></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li th:class="${links}=='index'?'active':''" ><a href="/">Home</a></li>
-                    <li th:class="${links}=='secret'?'active':''"><a href="/secret">Secret page</a></li>
+                    <li th:class="${links}=='index'?'active':''" ><a href="/index">Home</a></li>
+                    <li th:class="${links}=='secret'?'active':''"><a href="/secret">Edit news</a></li>
                     <li th:if="${#authentication.getName()}!='anonymousUser'" th:class="${links}=='secret2'?'active':''">
-                        <a href="/secret2">Secret page 2</a></li>
+                        <a href="/secret2">My news</a></li>
                     <li th:class="${links}=='login'?'active':''">
                         <a th:href="${#authentication.getName()}!='anonymousUser'?'/logout':'/secret'"
                                 th:text="${#authentication.getName()}!='anonymousUser'?'Sign out ('

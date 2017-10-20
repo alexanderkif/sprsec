@@ -9,6 +9,7 @@ import java.util.List;
 public interface DocsRepository extends CrudRepository<Docs, Long> {
 
     List<Docs> findByDocowner(Account docowner);
+    List<Docs> findAll();
 //    Docs findByTitledoc(String titledoc);
 
 }

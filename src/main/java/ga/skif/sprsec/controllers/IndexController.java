@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 public class IndexController {
@@ -28,16 +31,45 @@ public class IndexController {
 
     private String titl;
     private String li;
+    final Integer docsOnPage = 3;
 
     public IndexController() {
     }
 
     @RequestMapping(value = "/")
     public String home(Model model) {
+        Integer page = 0; // Integer.valueOf(request.getParameter("page"));
+//        if (page==null){ page=0;}
+        List<Docs> docs2 = docsRepository.findAll();
+        Long pages = Math.round(Math.ceil(docs2.size() / docsOnPage));
+        List docs = docs2.stream().sorted(Comparator.comparing(Docs::getDatedoc).reversed()).skip(page*docsOnPage).limit(3).collect(Collectors.toList());
         li = "index";
         titl = "Index";
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
+        model.addAttribute("docs", docs);
+        model.addAttribute("pages", pages);
+        model.addAttribute("page", page);
+        return "index";
+    }
+
+    @RequestMapping(value = "/index")
+    public String home(Model model, @ModelAttribute("page") String p) {
+        Integer page;
+        if (Objects.equals(p, "")){
+            page=0;
+        } else{
+            page = Integer.valueOf(p); }
+        List<Docs> docs2 = docsRepository.findAll();
+        Long pages = Math.round(Math.ceil(docs2.size() / docsOnPage));
+        List docs = docs2.stream().sorted(Comparator.comparing(Docs::getDatedoc).reversed()).skip(page*docsOnPage).limit(3).collect(Collectors.toList());
+        li = "index";
+        titl = "Index";
+        model.addAttribute("links", li);
+        model.addAttribute("titl", titl);
+        model.addAttribute("docs", docs);
+        model.addAttribute("pages", pages);
+        model.addAttribute("page", page);
         return "index";
     }
 
@@ -69,13 +101,20 @@ public class IndexController {
                     .filter(d -> d.getTitledoc().equals(titleDoc))
                     .findFirst()
                     .orElse(new Docs());
-            doc.setTitledoc(titleDoc);
-            doc.setTextdoc(textDoc);
-            doc.setDatedoc(new Date());
-            doc.setDocowner(account);
-            docsRepository.save(doc);
-            li = "secret";
-            titl = "Saved";
+            if (Objects.equals(textDoc, "delete")){
+                docsRepository.delete(doc);
+                li = "secret";
+                titl = "Deleted";
+            }
+            else {
+                doc.setTitledoc(titleDoc);
+                doc.setTextdoc(textDoc);
+                doc.setDatedoc(new Date());
+                doc.setDocowner(account);
+                docsRepository.save(doc);
+                li = "secret";
+                titl = "Saved";
+            }
         } catch (Exception e){
             li = "secret";
             titl = "Not saved";
@@ -86,11 +125,14 @@ public class IndexController {
     }
 
     @RequestMapping("/secret2")
-    public String secret2(Model model) {
+    public String secret2(Model model, Principal principal) {
+        Account account = accountRepository.findByEmail(principal.getName());
+        List<Docs> docs = docsRepository.findByDocowner(account);
         li = "secret2";
         titl = "Secret2";
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
+        model.addAttribute("docs", docs);
         return "secret2";
     }
 
@@ -121,9 +163,5 @@ public class IndexController {
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
         return "index";
-    }
-
-    private Account principalToAccount(Principal principal) {
-        return accountRepository.findByEmail(principal.getName());
     }
 }

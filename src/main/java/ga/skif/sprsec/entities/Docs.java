@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -19,14 +18,13 @@ public class Docs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
-    @Column(name = "iddoc", unique = true)
+    @Column(name = "iddoc", unique = true, nullable = false)
     private Long iddoc;
     @Column(name = "datedoc", nullable = false)
     private Date datedoc;
-    @Column(name = "titledoc", unique = true)
+    @Column(name = "titledoc", unique = true, nullable = false)
     private String titledoc;
-    @Column(name = "textdoc")
+    @Column(name = "textdoc", length=1023)
     private String textdoc;
     @ManyToOne
     private Account docowner;
