@@ -154,14 +154,14 @@ public class IndexController {
                     .enabled(true)
                     .build()
             );
-            li = "index";
+            li = "login";
             titl = "Added";
         } else {
-            li = "index";
+            li = "login";
             titl = "Not added";
         }
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "index";
+        return "login";
     }
 }
