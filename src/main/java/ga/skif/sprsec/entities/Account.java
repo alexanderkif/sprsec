@@ -29,4 +29,12 @@ public class Account {
     private String password;
     @Column(name = "enabled")
     private boolean enabled;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
