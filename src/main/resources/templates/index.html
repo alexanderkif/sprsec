@@ -26,10 +26,11 @@
                                 th:text="${doc.titledoc}"></h3></label>
                         <div class="col-sm-offset-1 col-sm-10 lefted" th:text="${doc.textdoc}"/>
                     </div>
+                    <br/>
                     <div class="form-group row">
-                    <span th:each="p : ${#numbers.sequence( 1, 3)}">
-                        <a th:text="  ${p}  " th:href="@{/index}" th:name="page" th:id="page"
-                           th:class="${p}==${page}?'active':''"></a>
+                    <span th:each="p : ${#numbers.sequence( 1, pages)}">
+                        <a th:text="${p}" th:href="@{'/index?page='+${p}}"
+                           th:class="${p}==${page}?'pageactive':'page'"></a>
                     </span>
                     </div>
                 </div>

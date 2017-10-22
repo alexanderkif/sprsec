@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.Comparator;
@@ -38,11 +39,18 @@ public class IndexController {
 
     @RequestMapping(value = "/")
     public String home(Model model) {
-        Integer page = 0; // Integer.valueOf(request.getParameter("page"));
+        Integer page = 1; // Integer.valueOf(request.getParameter("page"));
 //        if (page==null){ page=0;}
         List<Docs> docs2 = docsRepository.findAll();
-        Long pages = Math.round(Math.ceil(docs2.size() / docsOnPage));
-        List docs = docs2.stream().sorted(Comparator.comparing(Docs::getDatedoc).reversed()).skip(page*docsOnPage).limit(3).collect(Collectors.toList());
+        Double x = 1.0 * docs2.size() / docsOnPage;
+        Double xx = Double.valueOf(x);
+        Double xxx = Math.ceil(xx);
+        Long pages = Math.round(xxx);
+        List docs = docs2.stream()
+                .sorted(Comparator.comparing(Docs::getDatedoc).reversed())
+                .skip((page-1)*docsOnPage)
+                .limit(docsOnPage)
+                .collect(Collectors.toList());
         li = "index";
         titl = "Index";
         model.addAttribute("links", li);
@@ -53,16 +61,21 @@ public class IndexController {
         return "index";
     }
 
+
     @RequestMapping(value = "/index")
-    public String home(Model model, @ModelAttribute("page") String p) {
+    public String index(Model model, @RequestParam("page") String p) {
         Integer page;
         if (Objects.equals(p, "")){
-            page=0;
+            page=1;
         } else{
             page = Integer.valueOf(p); }
         List<Docs> docs2 = docsRepository.findAll();
-        Long pages = Math.round(Math.ceil(docs2.size() / docsOnPage));
-        List docs = docs2.stream().sorted(Comparator.comparing(Docs::getDatedoc).reversed()).skip(page*docsOnPage).limit(3).collect(Collectors.toList());
+        Long pages = Math.round(Math.ceil(1.0 * docs2.size() / docsOnPage));
+        List docs = docs2.stream()
+                .sorted(Comparator.comparing(Docs::getDatedoc).reversed())
+                .skip((page-1)*docsOnPage)
+                .limit(docsOnPage)
+                .collect(Collectors.toList());
         li = "index";
         titl = "Index";
         model.addAttribute("links", li);
