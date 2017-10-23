@@ -2,4 +2,4 @@
 Look at 
 https://sprsec.herokuapp.com
 
-Used SpringBoot, Secure, BCrypt, Postgresql, Thymeleaf, Bootsrap
+Used SpringBoot, Maven, Secure, BCrypt, Postgresql, JPA, CrudRepository, Lombok, Thymeleaf, Bootsrap
