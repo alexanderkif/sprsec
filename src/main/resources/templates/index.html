@@ -15,16 +15,19 @@
     <div class="container">
         <div class="row centered">
             <div class="col-lg-8" id="headerwrap">
-                <h1>SpringBoot</h1>
-                <h2 th:if="${titl}!='Added' and ${titl}!='Not added'">I try to use Spring</h2>
+                <h1>News board</h1>
+                <h2 th:if="${titl}!='Added' and ${titl}!='Not added'">(You can register and add your article)</h2>
                 <h2 th:if="${titl}=='Added'">Added. Please sign in.</h2>
                 <h2 th:if="${titl}=='Not added'">Add user failed.</h2>
                 <br/>
-                <div class="container fo">
+                <div class="container index">
                     <div class="form-group row" th:each="doc:${docs}">
                         <label class="col-sm-8 col-form-label col-sm-offset-2 lefted"><h3
                                 th:text="${doc.titledoc}"></h3></label>
                         <div class="col-sm-offset-1 col-sm-10 lefted" th:text="${doc.textdoc}"/>
+                        <div class="col-sm-offset-1 col-sm-10 lefted">
+                            <h6 class="lefted" th:text="${#strings.substring(doc.datedoc,0,16)}"></h6>
+                        </div>
                     </div>
                     <br/>
                     <div class="form-group row">

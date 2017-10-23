@@ -28,7 +28,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li th:class="${links}=='index'?'active':''" ><a href="/">Home</a></li>
-                    <li th:class="${links}=='secret'?'active':''"><a href="/secret">Edit news</a></li>
+                    <li th:class="${links}=='secret'?'active':''"><a href="/secret">Add or edit news</a></li>
                     <li th:if="${#authentication.getName()}!='anonymousUser'" th:class="${links}=='secret2'?'active':''">
                         <a href="/secret2">My news</a></li>
                     <li th:class="${links}=='login'?'active':''">
@@ -37,7 +37,7 @@
                                 +${#authentication.getName()}+')':'Sign in'">Sign</a></li>
                     <li th:if="${#authentication.getName()}=='anonymousUser'" th:class="${links}=='register'?'active':''">
                         <a href="/register">Register</a></li>
-                    <li><a href="mailto:alexander_kif@mail.ru?subject=From%20SahaSpring%20site" target="_blank">
+                    <li><a href="mailto:alexander_kif@mail.ru?subject=From%20sprsec%20site" target="_blank">
                         <i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
