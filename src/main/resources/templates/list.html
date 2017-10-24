@@ -17,7 +17,7 @@
             <div class="col-lg-8" id="headerwrap">
                 <br/>
                 <h2>List of my articles</h2>
-                <div th:if="${titl}!='Secret'" class="container index">
+                <div class="container index">
                     <div class="form-group row" th:each="doc:${docs}">
                         <label class="col-sm-8 col-form-label col-sm-offset-2 lefted">
                             <h3 th:text="${doc.titledoc}"></h3></label>

@@ -4,11 +4,11 @@
     <div th:fragment="header-css">
         <!-- this is header-css -->
         <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.css}"
-              href="../../css/bootstrap.css" />
+              href="../../static/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" th:href="@{css/font-awesome.min.css}"
-              href="../../css/font-awesome.min.css" />
+              href="../../static/css/font-awesome.min.css" />
         <link rel="stylesheet" th:href="@{css/main.css}"
-              href="../../css/main.css" />
+              href="../../static/css/main.css" />
     </div>
 </head>
 <body>
@@ -26,9 +26,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li th:class="${links}=='index'?'active':''" ><a href="/">Home</a></li>
-                    <li th:class="${links}=='secret'?'active':''"><a href="/secret">Add or edit news</a></li>
-                    <li th:if="${#authentication.getName()}!='anonymousUser'" th:class="${links}=='secret2'?'active':''">
-                        <a href="/secret2">My news</a></li>
+                    <li th:class="${links}=='edit'?'active':''"><a href="/edit">Add or edit news</a></li>
+                    <li th:if="${#authentication.getName()}!='anonymousUser'" th:class="${links}=='list'?'active':''">
+                        <a href="/list">My news</a></li>
                     <li th:class="${links}=='login'?'active':''">
                         <a th:href="${#authentication.getName()}!='anonymousUser'?'/logout':'/login'"
                                 th:text="${#authentication.getName()}!='anonymousUser'?'Sign out ('

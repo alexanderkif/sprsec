@@ -17,7 +17,7 @@
             <div class="col-lg-8" id="headerwrap">
                 <br/>
                 <br/>
-                <div th:if="${titl}=='Secret'" class="container fo">
+                <div th:if="${titl}=='Edit'" class="container fo">
                     <form action="#" th:action="@{/adddoc}" method="POST" name="model">
                         <div class="form-group row">
                             <label class="col-sm-8 col-form-label col-sm-offset-1 lefted"><h3>Add or change
@@ -36,7 +36,10 @@
                                 <!--<textarea rows="5" th:field="*{ipFilter}">...</textarea>-->
                                 <textarea type="text" th:rows="5" th:object="${textDoc}" class="form-control"
                                           id="textDoc" name="textDoc"
-                                          placeholder="Type text (max 700 simbols) or 'delete' to delete document"
+                                          placeholder="Enter new title and new text to add.
+                                          Enter old title and new text to edit.
+                                          Enter old title and 'delete' as text to delete.
+                                          (max 700 simbols)"
                                           th:maxlength="700"></textarea>
                             </div>
                         </div>
@@ -45,14 +48,14 @@
                                 <input type="submit" class="btn btn-primary" value="Submit"/>
                             </div>
                         </div>
-                        <div class="col-sm-offset-2 col-sm-7">
-                            <h6 class="lefted">Enter new title and new text <b>to add</b></h6>
-                            <h6 class="lefted">Enter old title and new text <b>to edit</b></h6>
-                            <h6 class="lefted">Enter old title and 'delete' as text <b>to delete</b></h6>
-                        </div>
+                        <!--<div class="col-sm-offset-2 col-sm-7">-->
+                            <!--<h6 class="lefted">Enter new title and new text <b>to add</b></h6>-->
+                            <!--<h6 class="lefted">Enter old title and new text <b>to edit</b></h6>-->
+                            <!--<h6 class="lefted">Enter old title and 'delete' as text <b>to delete</b></h6>-->
+                        <!--</div>-->
                     </form>
                 </div>
-                <div th:if="${titl}!='Secret'" class="container fo">
+                <div th:if="${titl}!='Edit'" class="container fo">
                     <form action="#" th:action="@{/}" method="POST" name="model">
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label col-sm-offset-2 lefted"><h3 th:text="${titl}">

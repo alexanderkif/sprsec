@@ -39,26 +39,7 @@ public class IndexController {
 
     @RequestMapping(value = "/")
     public String home(Model model) {
-        Integer page = 1; // Integer.valueOf(request.getParameter("page"));
-//        if (page==null){ page=0;}
-        List<Docs> docs2 = docsRepository.findAll();
-        Double x = 1.0 * docs2.size() / docsOnPage;
-        Double xx = Double.valueOf(x);
-        Double xxx = Math.ceil(xx);
-        Long pages = Math.round(xxx);
-        List docs = docs2.stream()
-                .sorted(Comparator.comparing(Docs::getDatedoc).reversed())
-                .skip((page-1)*docsOnPage)
-                .limit(docsOnPage)
-                .collect(Collectors.toList());
-        li = "index";
-        titl = "Index";
-        model.addAttribute("links", li);
-        model.addAttribute("titl", titl);
-        model.addAttribute("docs", docs);
-        model.addAttribute("pages", pages);
-        model.addAttribute("page", page);
-        return "index";
+        return "redirect:/index?page=1";
     }
 
 
@@ -95,13 +76,13 @@ public class IndexController {
         return "login";
     }
 
-    @RequestMapping("/secret")
-    public String secret(Model model) {
-        li = "secret";
-        titl = "Secret";
+    @RequestMapping("/edit")
+    public String edit(Model model) {
+        li = "edit";
+        titl = "Edit";
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "secret";
+        return "edit";
     }
 
     @RequestMapping("/adddoc")
@@ -116,7 +97,7 @@ public class IndexController {
                     .orElse(new Docs());
             if (Objects.equals(textDoc, "delete")){
                 docsRepository.delete(doc);
-                li = "secret";
+                li = "edit";
                 titl = "Deleted";
             }
             else {
@@ -125,28 +106,28 @@ public class IndexController {
                 doc.setDatedoc(new Date());
                 doc.setDocowner(account);
                 docsRepository.save(doc);
-                li = "secret";
+                li = "edit";
                 titl = "Saved";
             }
         } catch (Exception e){
-            li = "secret";
+            li = "edit";
             titl = "Not saved";
         }
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "secret";
+        return "edit";
     }
 
-    @RequestMapping("/secret2")
-    public String secret2(Model model, Principal principal) {
+    @RequestMapping("/list")
+    public String list(Model model, Principal principal) {
         Account account = accountRepository.findByEmail(principal.getName());
         List<Docs> docs = docsRepository.findByDocowner(account);
-        li = "secret2";
-        titl = "Secret2";
+        li = "list";
+        titl = "List";
         model.addAttribute("links", li);
         model.addAttribute("titl", titl);
         model.addAttribute("docs", docs);
-        return "secret2";
+        return "list";
     }
 
     @RequestMapping("/register")
