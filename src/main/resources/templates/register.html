@@ -23,18 +23,21 @@
                 <div class="container fo">
                     <form action="#" th:action="@{/adduser}" method="POST" name="model">
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label col-sm-offset-2 lefted"><h3>New account</h3></label>
+                            <label class="col-sm-4 col-form-label col-sm-offset-2 lefted">
+                                <h3>New account</h3></label>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label col-sm-offset-2 lefted">email</label>
                             <div class="col-sm-7 col-sm-offset-2">
-                                <input type="email" th:object="${email}" class="form-control" id="username" name="username" placeholder="Email" />
+                                <input type="email" th:object="${email}" class="form-control"
+                                       id="username" name="username" placeholder="Email" />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-sm-offset-2 col-form-label lefted">password</label>
                             <div class="col-sm-offset-2 col-sm-7">
-                                <input type="text" th:object="${password}" class="form-control" id="password" name="password"
+                                <input type="text" th:object="${password}" class="form-control"
+                                       id="password" name="password"
                                        placeholder="Password" />
                             </div>
                         </div>
@@ -45,34 +48,6 @@
                         </div>
                     </form>
                 </div>
-
-                <!--<div class="container fo">-->
-                <!--<form action="/" method="POST" name="model">-->
-                <!--<div class="form-group row">-->
-                <!--<br>      <label for="email" class="col-sm-6 col-form-label col-sm-offset-3 centered">MyUserPrincipal 2 is exist.<br>Please loguot firstly.</label>-->
-                <!--<input type="hidden" id="email" name="email" value="2@2"></div>-->
-                <!--<div class="form-group row">-->
-                <!--<div class="col-sm-offset-3 col-sm-6 centered">-->
-                <!--<button type="submit" class="btn btn-primary">Continue</button>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</form>-->
-                <!--</div>-->
-
-                <!--<div class="container fo">-->
-                <!--<form action="/login" method="POST" name="model">-->
-                <!--<div class="form-group row"><br/>-->
-                <!--<label class="col-sm-6 col-form-label col-sm-offset-3 centered">New account was added-->
-                <!--successful</label>-->
-                <!--</div>-->
-                <!--<div class="form-group row">-->
-                <!--<div class="col-sm-offset-3 col-sm-6 centered">-->
-                <!--<button type="submit" class="btn btn-primary">Sign in</button>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</form>-->
-                <!--</div>-->
-
             </div>
         </div>
     </div>

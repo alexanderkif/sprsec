@@ -159,8 +159,10 @@ public class IndexController {
     }
 
     @RequestMapping("/adduser")
-    public String adduser(Model model, @ModelAttribute("username") String email, @ModelAttribute("password") String password) {
-        if (accountRepository.findByEmail(email) == null) {
+    public String adduser(Model model,
+                          @ModelAttribute("username") String email, @ModelAttribute("password") String password) {
+        if (accountRepository.findByEmail(email) == null
+                && !Objects.equals(email, "") && !Objects.equals(password, "")) {
             accountRepository.save(Account.builder()
                     .email(email)
                     .password(encoder.encode(password))
