@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+
+    <div th:fragment="header-css">
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+        <title th:text="${titl}">Title</title>
+
+        <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    </div>
+
+</head>
+
+<body>
+
+<div th:fragment="header-top">
+    <br/>
+    <div class="row" style="text-align: center">
+        <div class="col-sm-12">
+            <div class="panel panel-footer panel-default">
+                <h1>
+                    <img th:src="@{/css/news.png}" width="80" height="65" />
+                    News Board
+                    <small><a href="/index?page=1"> (to the dark site version)</a></small>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <br/>
+</div>
+
+<div th:fragment="left-menu">
+    <div class="col-sm-3">
+        <div class="list-group">
+            <a href="/light/" class="list-group-item">Home</a>
+            <a href="/light/login" class="list-group-item" th:if="${#authentication.getName()}=='anonymousUser'">Sign in</a>
+            <a href="/light/list" class="list-group-item" th:if="${#authentication.getName()}!='anonymousUser'">My news</a>
+            <a href="/light/register" class="list-group-item" th:if="${#authentication.getName()}=='anonymousUser'">Registration</a>
+            <a href="/light/edit" class="list-group-item" th:if="${#authentication.getName()}!='anonymousUser'">Edit news</a>
+        </div>
+        <div class="panel panel-default" th:if="${#authentication.getName()}=='anonymousUser'">
+            <div>
+                <div class="panel-heading">
+                    Quick login
+                </div>
+                <div class="panel-body">
+                    <form action="#" th:action="@{/login}" method="POST" name="model">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="username" name="username"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter email"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Password"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#authentication.getName()}!='anonymousUser'">
+            <a class="list-group-item" th:text="'Sign out ('+${#authentication.getName()}+')'" href="/logout">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="footer">
+    <br/>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default panel-footer">
+                &copy; copyright of Aleksandr Nikiforov
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

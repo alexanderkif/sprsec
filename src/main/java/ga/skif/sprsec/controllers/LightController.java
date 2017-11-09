@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @SessionAttributes(value = "light")
-public class IndexController {
+public class LightController {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -33,28 +33,22 @@ public class IndexController {
     PasswordEncoder encoder;
 
     private String titl;
-    private String li;
     final Integer docsOnPage = 3;
 
-    @ModelAttribute("light")
-    public String createLight() {
-        return "off";
+
+
+    public LightController() {
     }
 
-    public IndexController() {
-    }
-
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/light")
     public String home(Model model, @ModelAttribute("light") String light) {
-        if(light.equals("on"))
-            return "redirect:/light/index?page=1";
-        model.addAttribute("light", "off");
-        return "redirect:/index?page=1";
+        model.addAttribute("light", "on");
+        return "redirect:/light/index?page=1";
     }
 
-    @RequestMapping(value = "/index")
+
+    @RequestMapping(value = "/light/index")
     public String index(Model model, @RequestParam("page") String p) {
-        model.addAttribute("light", "off");
         Integer page;
         if (Objects.equals(p, "")){
             page=1;
@@ -67,37 +61,32 @@ public class IndexController {
                 .skip((page-1)*docsOnPage)
                 .limit(docsOnPage)
                 .collect(Collectors.toList());
-        li = "index";
         titl = "Index";
-        model.addAttribute("links", li);
         model.addAttribute("titl", titl);
         model.addAttribute("docs", docs);
         model.addAttribute("pages", pages);
         model.addAttribute("page", page);
-        return "index";
+        return "light/index";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/light/login")
     public String login(Model model) {
-        li = "login";
         titl = "Login";
-        model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "login";
+        return "light/login";
     }
 
-    @RequestMapping("/edit")
+    @RequestMapping("/light/edit")
     public String edit(Model model) {
-        li = "edit";
         titl = "Edit";
-        model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "edit";
+        return "light/edit";
     }
 
-    @RequestMapping("/adddoc")
-    public String adddoc(Model model, @ModelAttribute("titleDoc") String titleDoc,
-                         @ModelAttribute("textDoc") String textDoc, Principal principal) {
+    @RequestMapping("/light/adddoc")
+    public String adddoc(Model model, Principal principal,
+                         @ModelAttribute("titleDoc") String titleDoc,
+                         @ModelAttribute("textDoc") String textDoc) {
         try {
             Account account = accountRepository.findByEmail(principal.getName());
             List<Docs> docs = docsRepository.findByDocowner(account);
@@ -107,7 +96,6 @@ public class IndexController {
                     .orElse(new Docs());
             if (Objects.equals(textDoc, "delete")){
                 docsRepository.delete(doc);
-                li = "edit";
                 titl = "Deleted";
             }
             else {
@@ -116,40 +104,33 @@ public class IndexController {
                 doc.setDatedoc(new Date());
                 doc.setDocowner(account);
                 docsRepository.save(doc);
-                li = "edit";
                 titl = "Saved";
             }
         } catch (Exception e){
-            li = "edit";
             titl = "Not saved";
         }
-        model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "edit";
+        return "light/edit";
     }
 
-    @RequestMapping("/list")
+    @RequestMapping("/light/list")
     public String list(Model model, Principal principal) {
         Account account = accountRepository.findByEmail(principal.getName());
         List<Docs> docs = docsRepository.findByDocowner(account);
-        li = "list";
         titl = "List";
-        model.addAttribute("links", li);
         model.addAttribute("titl", titl);
         model.addAttribute("docs", docs);
-        return "list";
+        return "light/list";
     }
 
-    @RequestMapping("/register")
+    @RequestMapping("/light/register")
     public String register(Model model) {
-        li = "register";
         titl = "Register";
-        model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "register";
+        return "light/register";
     }
 
-    @RequestMapping("/adduser")
+    @RequestMapping("/light/adduser")
     public String adduser(Model model,
                           @ModelAttribute("username") String email, @ModelAttribute("password") String password) {
         if (accountRepository.findByEmail(email) == null
@@ -160,14 +141,11 @@ public class IndexController {
                     .enabled(true)
                     .build()
             );
-            li = "login";
             titl = "Added";
         } else {
-            li = "login";
             titl = "Not added";
         }
-        model.addAttribute("links", li);
         model.addAttribute("titl", titl);
-        return "login";
+        return "light/login";
     }
 }
